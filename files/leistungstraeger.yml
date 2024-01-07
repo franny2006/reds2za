@@ -1,0 +1,943 @@
+leistungstraeger:
+  leistungstraeger:
+    - id: "e7fc7b48-d2ce-45bb-b394-ce06786c52c3"
+      name: "Deutsche Rentenversicherung Nord"
+      panrs: [ "002", "026", "702", "726" ]
+      betriebsnummer: "77917982"
+      leistungszweig: "RV"
+      kurzname: "DRV Nord"
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Deutsche Rentenversicherung"
+          name2: "Nord"
+          plz: "23544"
+          ort: "Lübeck"
+        annahmedokument:
+          name: "Deutsche Rentenversicherung Nord Neubrandenburg"
+          plz: "17007"
+          ort: "Neubrandenburg"
+          strasse: "Postfach 17 06"
+    - id: "d743cb5f-cc3b-441e-8d38-8c034f386524"
+      name: "Deutsche Rentenversicherung Mitteldeutschland"
+      panrs: [ "009", "709" ]
+      betriebsnummer: "01000046"
+      leistungszweig: "RV"
+      kurzname: "DRV Sachsen"
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Deutsche Rentenversicherung"
+          name2: "Mitteldeutschland"
+          plz: "04151"
+          ort: "Leipzig"
+        annahmedokument:
+          name: "Deutsche Rentenversicherung Mitteldeutschland"  
+          plz: "06092"
+          ort: "Halle"
+    - id: "95143407-3d1a-40a1-a2c1-e33d0cad5bf0"
+      name: "Deutsche Rentenversicherung Berlin-Brandenburg"
+      panrs: [ "025", "065", "725", "765" ]
+      betriebsnummer: "01000024"
+      leistungszweig: "RV"
+      kurzname: "LVA Berlin"
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Deutsche Rentenversicherung"
+          name2: "Berlin-Brandenburg"
+          plz: "15228"
+          ort: "Frankfurt (Oder)"
+        annahmedokument:
+          name: "Deutsche Rentenversicherung Berlin"  
+          plz: "14047"
+          ort: "Berlin"
+    - id: "c67dfb72-e636-4ed1-9a54-b4776570ec05"
+      name: "Deutsche Rentenversicherung Braunschweig-Hannover"
+      panrs: [ "010", "710" ]
+      betriebsnummer: "29029435"
+      leistungszweig: "RV"
+      kurzname: "LVA Hannover"
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Deutsche Rentenversicherung"
+          name2: "Braunschweig-Hannover"
+          plz: "30875"
+          ort: "Laatzen"
+        annahmedokument:
+          name: "Deutsche Rentenversicherung Braunschweig-Hannover"  
+          plz: "30880"
+          ort: "Laatzen"
+          strasse: "Lange Weihe"
+          hausnummer: "6"
+    - id: "e968193b-753b-49fb-959c-913bbc9b16e5"
+      name: "Deutsche Rentenversicherung Westfalen"
+      panrs: [ "011", "711" ]
+      betriebsnummer: "39808565"
+      leistungszweig: "RV"
+      kurzname: "LVA Westfalen"
+      aenderungPanrDurchWegfallvermerkUnzulaessig: [ "011" ]
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Deutsche Rentenversicherung"
+          name2: "Westfalen"
+          plz: "48125"
+          ort: "Münster"
+        annahmedokument:
+          name: "Deutsche Rentenversicherung Westfalen"  
+          plz: "48125"
+          ort: "Münster"
+          strasse: "Postfach 62 27"
+    - id: "e27090a9-2357-4be7-ba86-d6b8facae698"
+      name: "Deutsche Rentenversicherung Hessen"
+      panrs: [ "012", "712" ]
+      betriebsnummer: "44826590"
+      leistungszweig: "RV"
+      kurzname: "LVA Hessen"
+      aenderungPanrDurchWegfallvermerkUnzulaessig: [ "012", "712" ]
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Deutsche Rentenversicherung"
+          name2: "Hessen"
+          plz: "60591"
+          ort: "Frankfurt am Main"
+        annahmedokument:
+          name: "Deutsche Rentenversicherung Hessen"  
+          plz: "60558"
+          ort: "Frankfurt"
+          strasse: "Postfach 70 08 20"
+    - id: "d0b81a74-67b0-413d-ac91-6007b6e04b9d"
+      name: "Deutsche Rentenversicherung Rheinland"
+      panrs: [ "013", "713" ]
+      betriebsnummer: "34216875"
+      leistungszweig: "RV"
+      kurzname: "LVA Rheinprov."
+      aenderungPanrDurchWegfallvermerkUnzulaessig: [ "013", "713" ]
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Deutsche Rentenversicherung"
+          name2: "Rheinland"
+          plz: "40194"
+          ort: "Düsseldorf"
+        annahmedokument:
+          name: "DRV Rheinland"  
+          plz: "40002"
+          ort: "Düsseldorf"
+          strasse: "Postfach 10 11 24"
+    - id: "b7d57625-cf14-499e-b31c-2319afa8e891"
+      name: "Deutsche Rentenversicherung Bayern Süd"
+      panrs: [ "015", "715" ]
+      betriebsnummer: "87119697"
+      leistungszweig: "RV"
+      kurzname: "LVA Oberbayern"
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Deutsche Rentenversicherung"
+          name2: "Bayern Süd"
+          plz: "81729"
+          ort: "München"
+        annahmedokument:
+          name: "Deutsche Rentenversicherung Bayern Süd Landshut"  
+          plz: "84024"
+          ort: "Landshut"
+    - id: "bcd88d7b-86b4-43d3-8ddc-7cacd57fd602"
+      name: "Deutsche Rentenversicherung Rheinland-Pfalz"
+      panrs: [ "016", "716" ]
+      betriebsnummer: "54301143"
+      leistungszweig: "RV"
+      kurzname: "LVA Rhl.-Pfalz"
+      aenderungPanrDurchWegfallvermerkUnzulaessig: [ "016", "716" ]
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Deutsche Rentenversicherung"
+          name2: "Rheinland-Pfalz"
+          plz: "67340"
+          ort: "Speyer"
+        annahmedokument:
+          name: "Deutsche Rentenversicherung Rheinland-Pfalz"  
+          plz: "67325"
+          ort: "Speyer"
+          strasse: "Postfach 15 80"
+    - id: "2ba67a99-1c7e-4204-9e3f-2b9f7a4aa5ee"
+      name: "Deutsche Rentenversicherung Saarland"
+      panrs: [ "017", "717" ]
+      betriebsnummer: "55419988"
+      leistungszweig: "RV"
+      kurzname: "LVA Saarland"
+      aenderungPanrDurchWegfallvermerkUnzulaessig: [ "017", "717" ]
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Deutsche Rentenversicherung"
+          name2: "Saarland"
+          plz: "66108"
+          ort: "Saarbrücken"
+        annahmedokument:
+          name: "Deutsche Rentenversicherung für das Saarland"  
+          plz: "66018"
+          ort: "Saarbrücken"
+    - id: "00fb6af2-3ab5-42f8-a473-5ceddf9e8215"
+      name: "Deutsche Rentenversicherung Nordbayern"
+      panrs: [ "018", "718" ]
+      betriebsnummer: "72302437"
+      leistungszweig: "RV"
+      kurzname: "LVA Unterfrank."
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Deutsche Rentenversicherung"
+          name2: "Nordbayern"
+          plz: "95440"
+          ort: "Bayreuth"
+        annahmedokument:
+          name: "Deutsche Rentenversicherung Nordbayern"  
+          plz: "95440"
+          ort: "Bayreuth"
+    - id: "67294d7c-3f86-4c0e-99a6-dfad34031fc0"
+      name: "Deutsche Rentenversicherung Schwaben"
+      panrs: [ "021", "721" ]
+      betriebsnummer: "81116613"
+      leistungszweig: "RV"
+      kurzname: "LVA Schwaben"
+      aenderungPanrDurchWegfallvermerkUnzulaessig: [ "021", "721" ]
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Deutsche Rentenversicherung"
+          name2: "Schwaben"
+          plz: "86223"
+          ort: "Augsburg"
+        annahmedokument:
+          name: "Deutsche Rentenversicherung Schwaben"  
+          plz: "86135"
+          ort: "Augsburg"
+    - id: "435bb63a-a93a-4622-b906-7085a3cc5439"
+      name: "Deutsche Rentenversicherung Baden-Württemberg"
+      panrs: [ "024", "724" ]
+      betriebsnummer: "62207726"
+      leistungszweig: "RV"
+      kurzname: "LVA Baden-W."
+      aenderungPanrDurchWegfallvermerkUnzulaessig: [ "024", "724" ]
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Deutsche Rentenversicherung"
+          name2: "Baden-Württemberg"
+          plz: "70429"
+          ort: "Stuttgart"
+        annahmedokument:
+          name: "Deutsche Rentenversicherung Baden-Württemberg"  
+          plz: "70429"
+          ort: "Stuttgart"
+          strasse: "Postfach 40 06 49"
+    - id: "dce68be4-743b-470b-89f3-df505e6fc86f"
+      name: "Deutsche Rentenversicherung Oldenburg-Bremen"
+      panrs: [ "028", "728" ]
+      betriebsnummer: "26109788"
+      leistungszweig: "RV"
+      kurzname: "LVA Oldenbg-Br."
+      aenderungPanrDurchWegfallvermerkUnzulaessig: [ "028", "728" ]
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Deutsche Rentenversicherung"
+          name2: "Oldenburg-Bremen"
+          plz: "26112"
+          ort: "Oldenburg"
+        annahmedokument:
+          name: "Deutsche Rentenversicherung Oldenburg-Bremen"
+          plz: "26112"
+          ort: "Oldenburg"
+    - id: "9b3860d3-6943-4fad-9833-e6cb061ca34c"
+      name: "Deutsche Rentenversicherung Knappschaft-Bahn-See"
+      panrs: [ "037", "077", "737", "777", "805" ]
+      betriebsnummer: "98094032"
+      leistungszweig: "RV"
+      selbstZahler: [ "805" ]
+      kurzname: "K-B-S"
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Deutsche Rentenversicherung"
+          name2: "Knappschaft-Bahn-See"
+          strasse: "Postfach 10 21 50"
+          plz: "44721"
+          ort: "Bochum"
+        annahmedokument:
+          name: "Deutsche Rentenversicherung Knappschaft-Bahn-See"  
+          plz: "44781"
+          ort: "Bochum"
+    - id: "ab1f8f93-61e6-4ed2-8901-97e0e7fd4375"
+      name: "Deutsche Rentenversicherung Bund"
+      panrs: [ "740", "770", "771", "772", "774", "797", "901", "970", "971", "972", "974", "997" ]
+      betriebsnummer: "90209055"
+      leistungszweig: "RV"
+      antwortetNichtAufAuskunftsersuchen: [ "740", "901" ]
+      kurzname: "DRV-Bund"
+      aenderungPanrDurchWegfallvermerkUnzulaessig: [ "797", "997" ]
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Deutsche Rentenversicherung"
+          name2: "Bund"
+          plz: "10704"
+          ort: "Berlin"
+        annahmedokument:
+          name: "Deutsche Rentenversicherung Bund"  
+          plz: "10704"  
+          ort: "Berlin"
+    - id: "0480c59a-4a78-4711-a53d-451c7327a1c0"
+      name: "Deutsche Rentenversicherung KBS Seemannskasse"
+      panrs: [ "050", "750" ]
+      betriebsnummer: "98096762"
+      leistungszweig: "RV"
+      kurzname: "KBS-Seemannsk."
+      aenderungPanrDurchWegfallvermerkUnzulaessig: [ "050", "750" ]
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "DRV KBS - Seemannskasse"
+          strasse: "Postfach 50 06 29"
+          plz: "22706"
+          ort: "Hamburg"
+        annahmedokument:
+          name: "Deutsche Rentenversicherung Knappschaft-Bahn-See"  
+          plz: "44781"
+          ort: "Bochum"
+    - id: "ce9a4ccc-455e-4a98-881f-95a3bb036ffc"
+      name: "DRV KBS für Renten aus der knappschaftlichen Rentenversicherung"
+      panrs: [ "705", "706", "905", "906" ]
+      betriebsnummer: "98044291"
+      leistungszweig: "RV"
+      kurzname: "KBS-Knappschaft"
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Deutsche Rentenversicherung"
+          name2: "Knappschaft-Bahn-See"
+          strasse: "Postfach 10 21 50"
+          plz: "44721"
+          ort: "Bochum"
+        annahmedokument:
+          name: "Deutsche Rentenversicherung Knappschaft-Bahn-See"  
+          plz: "44781"  
+          ort: "Bochum"
+    - id: "f22f77ec-3720-4558-a814-6d2325f58eba"
+      name: "Berufsgenossenschaft Energie Textil Elektro Medienerzeugnisse"
+      panrs: [ "110", "268", "538" ]
+      leistungszweig: "UV"
+      aenderungPanrDurchWegfallvermerkUnzulaessig: [ "110", "268", "538" ]
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Berufsgenossenschaft Energie Textil"
+          name2: "Elektro Medienerzeugnisse"
+          strasse: "Postfach 51 05 80"
+          plz: "50941"
+          ort: "Köln"
+        annahmedokument:
+          name: "BG ETEM"  
+          plz: "50968"  
+          ort: "Köln"
+          strasse: "Postfach 51 05 80"
+    - id: "a3dffd72-7bd2-4fab-a307-8d271e9cb804"
+      name: "Berufsgenossenschaft Holz und Metall"
+      panrs: [ "111", "266", "555" ]
+      leistungszweig: "UV"
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Berufsgenossenschaft Holz u. Metall"
+          strasse: "Postfach 10 10 15"
+          plz: "40001"
+          ort: "Düsseldorf"
+        annahmedokument:
+          name: "BG Holz und Metall"  
+          plz: "40210"  
+          ort: "Düsseldorf"
+          strasse: "Kreuzstr."
+          hausnummer: "45"
+    - id: "a112ac78-fa69-4a5e-971e-9d264c4e5b76"
+      name: "Berufsgenossenschaft Rohstoffe und chemische Industrie, Heidelberg"
+      panrs: [ "124" ]
+      leistungszweig: "UV"
+      selbstZahler: [ "124" ]
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "BG Rohstoffe"
+          name2: "und chemische Industrie"
+          strasse: "Postfach 10 14 80"
+          plz: "69004"
+          ort: "Heidelberg"
+    - id: "0888b9e8-fb40-4262-8d39-7e475ffefdd0"
+      name: "Berufsgenossenschaft Nahrungsmittel und Gastgewerbe"
+      panrs: [ "140" ]
+      leistungszweig: "UV"
+      selbstZahler: [ "140" ]
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "BG Nahrungsmittel und Gastgewerbe"
+          strasse: "Dynamostr."
+          hausnummer: "7-11"
+          plz: "68165"
+          ort: "Mannheim"
+    - id: "f74a4dfb-03fc-4eab-9e35-aa59d1a6c176"
+      name: "Berufsgenossenschaft der Bauwirtschaft - Bezirksverwaltung Böblingen"
+      panrs: [ "153" ]
+      leistungszweig: "UV"
+      selbstZahler: [ "153" ]
+    - id: "70486bb0-2a04-4c4d-9f21-d09b013e962d"
+      name: "Berufsgenossenschaft Verkehrswirtschaft Post-Logistik Telekommunikation"
+      panrs: [ "163", "285", "307", "507", "520" ]
+      leistungszweig: "UV"
+      aenderungPanrDurchWegfallvermerkUnzulaessig: [ "520" ]
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "BG Verkehrswirtschaft Post-Logistik"
+          name2: "Telekommunikation"
+          plz: "22757"
+          ort: "Hamburg"
+        annahmedokument:
+          name: "BG Verkehr"  
+          plz: "22757"  
+          ort: "Hamburg"
+    - id: "09aa0fcb-4562-4433-9717-fa8ccbd34786"
+      name: "Berufsgenossenschaft Handel und Warenlogistik"
+      panrs: [ "171", "282", "558", "559" ]
+      leistungszweig: "UV"
+      aenderungPanrDurchWegfallvermerkUnzulaessig: [ "171", "282", "558", "559" ]
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Berufsgenossenschaft Handel"
+          name2: "und Warenlogistik"
+          strasse: "Postfach 12 08"
+          plz: "53002"
+          ort: "Bonn"
+        annahmedokument:
+          name: "BG für Handel und Warenlogistik"  
+          plz: "53129"  
+          ort: "Bonn"
+          strasse: "Herrmann-Milde-Str"
+          hausnummer: "1"
+    - id: "68069e2d-efac-4083-b0ec-5d823d0d0b69"
+      name: "Verwaltungs-Berufsgenossenschaft, Berufsgenossenschaft der Banken, Versicherungen, Verwaltungen"
+      panrs: [ "172", "283", "329", "519", "548" ]
+      leistungszweig: "UV"
+      selbstZahler: [ "548" ]
+      aenderungPanrDurchWegfallvermerkUnzulaessig: [ "519" ]
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Verwaltungs-Berufsgenossenschaft"
+          plz: "22281"
+          ort: "Hamburg"
+        annahmedokument:
+          name: "VBG-Ihre gesetzliche Unfallversicherung-"  
+          plz: "22281"  
+          ort: "Hamburg"
+    - id: "ab13e58e-6808-496b-859c-b3a6c7bf9b28"
+      name: "Berufsgenossenschaft für Gesundheitsdienst und Wohlfahrtspflege"
+      panrs: [ "173", "184", "288", "810" ]
+      leistungszweig: "UV"
+      selbstZahler: [ "184" ]
+      aenderungPanrDurchWegfallvermerkUnzulaessig: [ "810" ]
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Berufsgenossensch.f.Gesundheitsdst."
+          name2: "u.Wohlfahrtspflege -Hauptverwaltg.-"
+          strasse: "Pappelallee"
+          hausnummer: "35-37"
+          plz: "22089"
+          ort: "Hamburg"
+        annahmedokument:
+          name: "BG Gesundh.+ Wohlfahrt Hamburg"  
+          plz: "22052"  
+          ort: "Hamburg"
+          strasse: "Postfach 76 02 24"
+    - id: "4f9f6cb5-480c-4a81-96b4-fa7e160de666"
+      name: "SVLFG Landwirtschaftliche Berufsgenossenschaft"
+      panrs: [ "235" ]
+      leistungszweig: "UV"
+      selbstZahler: [ "235" ]
+    - id: "2cd97118-e979-4cad-b060-05d6f0a7efd1"
+      name: "Unfallkasse Mecklenburg-Vorpommern"
+      panrs: [ "291" ]
+      leistungszweig: "UV"
+      selbstZahler: [ "291" ]
+    - id: "80bd727b-850d-49e5-8898-77871398e79b"
+      name: "Unfallkasse Thüringen - Landesbereich -"
+      panrs: [ "292", "364", "546" ]
+      leistungszweig: "UV"
+      aenderungPanrDurchWegfallvermerkUnzulaessig: [ "292", "364", "546" ]
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Unfallkasse Thüringen"
+          name2: "-Landesbereich-"
+          strasse: "Postfach 10 03 02"
+          plz: "99853"
+          ort: "Gotha"
+        annahmedokument:
+          name: "Unfallkasse Thüringen"  
+          plz: "99867"  
+          ort: "Gotha"
+          strasse: "Humboldtstr"
+          hausnummer: "111"
+    - id: "c14e326c-12ab-47fa-abc0-1c76fe1cec81"
+      name: "Unfallversicherung Bund und Bahn (UK des Bundes)"
+      panrs: [ "296", "297", "304", "305", "306", "392", "514", "515", "516" ]
+      leistungszweig: "UV"
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Unfallversicherung Bund und Bahn"
+          name2: "Hauptverwaltung"
+          plz: "26380"
+          ort: "Wilhelmshaven"
+        annahmedokument:
+          name: "Unfallversicherung Bund und Bahn"  
+          plz: "26382"  
+          ort: "Wilhelmshaven"
+          strasse: "Weserstr."
+          hausnummer: "47"
+    - id: "76b9ac47-44f1-4533-b779-3a2c1fbad3dd"
+      name: "Unfallversicherung Bund und Bahn (EUK)"
+      panrs: [ "316", "322", "328", "369", "811", "812" ]
+      leistungszweig: "UV"
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Unfallversicherung Bund und Bahn"
+          plz: "26380"
+          ort: "Wilhelmshaven"
+    - id: "36268d5d-c350-4da7-b929-ef0d23cc91a9"
+      name: "Unfallkasse Berlin"
+      panrs: [ "298", "330", "370", "534" ]
+      leistungszweig: "UV"
+      selbstZahler: [ "370" ]
+      aenderungPanrDurchWegfallvermerkUnzulaessig: [ "298", "330", "534" ]
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Unfallkasse Berlin"
+          strasse: "Postfach 490366"
+          plz: "12283"
+          ort: "Berlin"
+        annahmedokument:
+          name: "Unfallkasse Berlin"  
+          plz: "12254"  
+          ort: "Berlin"
+          strasse: "Postfach 48 05 84"
+    - id: "af78c3fd-7c3d-4530-998b-872f516eda5c"
+      name: "Unfallkasse Hessen"
+      panrs: [ "301", "323", "339", "373", "384", "503", "539", "545" ]
+      leistungszweig: "UV"
+      selbstZahler: [ "373", "384", "539" ]
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Unfallkasse Hessen"
+          strasse: "Postfach 10 10 42"
+          plz: "60010"
+          ort: "Frankfurt"
+        annahmedokument:
+          name: "Unfallkasse Hessen"  
+          plz: "60486"  
+          ort: "Frankfurt"
+          strasse: "Leonardo-da-Vinci-Allee"
+          hausnummer: "20"
+    - id: "0e6f4e8e-dad3-4ca4-9e6e-d5770907f59f"
+      name: "Unfallkasse Thüringen - Kommunaler Bereich -"
+      panrs: [ "302", "556" ]
+      leistungszweig: "UV"
+      aenderungPanrDurchWegfallvermerkUnzulaessig: [ "302", "556" ]
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Unfallkasse Thüringen"
+          name2: "-Kommunaler Bereich-"
+          strasse: "Postfach 10 03 02"
+          plz: "99853"
+          ort: "Gotha"
+        annahmedokument:
+          name: "Unfallkasse Thüringen"  
+          plz: "99867"  
+          ort: "Gotha"
+          strasse: "Humboldtstr"
+          hausnummer: "111"
+    - id: "e4018ddc-e67d-4e01-b69c-20c5cadd95e4"
+      name: "Unfallkasse Rheinland-Pfalz"
+      panrs: [ "303" ]
+      leistungszweig: "UV"
+      selbstZahler: [ "303" ]
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Unfallkasse Rheinland-Pfalz"
+          plz: "56624"
+          ort: "Andernach"
+    - id: "d7f62c98-99a1-486a-9d4d-f21831b9e2e9"
+      name: "Unfallkasse Sachsen"
+      panrs: [ "311" ]
+      leistungszweig: "UV"
+      selbstZahler: [ "311" ]
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Unfallkasse Sachsen"
+          strasse: "Postfach 42"
+          plz: "01651"
+          ort: "Meißen"
+    - id: "65361257-e15c-47a9-aa1c-0f177fc99a6d"
+      name: "Hanseatische Feuerwehr-Unfallkasse Nord"
+      panrs: [ "318", "354", "358" ]
+      leistungszweig: "UV"
+      selbstZahler: [ "354", "358" ]
+      aenderungPanrDurchWegfallvermerkUnzulaessig: [ "318" ]
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Feuerwehr-Unfallkasse"
+          name2: "Mecklenburg-Vorpommern"
+          strasse: "Postfach 1 01 34"
+          plz: "19001"
+          ort: "Schwerin"
+    - id: "01108f25-86ad-4a99-836c-0486aba9a561"
+      name: "Feuerwehr-Unfallkasse Mitte"
+      panrs: [ "326", "327" ]
+      leistungszweig: "UV"
+      selbstZahler: [ "326", "327" ]
+    - id: "127e6d44-70a1-4219-b784-cdb304177545"
+      name: "Unfallkasse Sachsen-Anhalt"
+      panrs: [ "333" ]
+      leistungszweig: "UV"
+      selbstZahler: [ "333" ]
+    - id: "1cb87db1-64fa-49ce-ae01-eca046ca1bfe"
+      name: "Unfallkasse Baden-Württemberg"
+      panrs: [ "335", "512" ]
+      leistungszweig: "UV"
+      aenderungPanrDurchWegfallvermerkUnzulaessig: [ "335", "512" ]
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Unfallkasse Baden-Württemberg"
+          plz: "70324"
+          ort: "Stuttgart"
+        annahmedokument:
+          name: "Unfallkasse BW"  
+          plz: "70324"  
+          ort: "Stuttgart"
+    - id: "a7088118-94ec-4d80-8458-f4603db65c39"
+      name: "Landesunfallkasse Niedersachsen"
+      panrs: [ "337", "841" ]
+      leistungszweig: "UV"
+      aenderungPanrDurchWegfallvermerkUnzulaessig: [ "337", "841" ]
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Landesunfallkasse Niedersachsen"
+          strasse: "Postfach 81 03 61"
+          plz: "30503"
+          ort: "Hannover"
+    - id: "20357fff-4025-4f8b-a349-c2f6239f9faa"
+      name: "Kommunale Unfallversicherung Bayern (KUVB)"
+      panrs: [ "340", "345", "361", "827" ]
+      leistungszweig: "UV"
+      selbstZahler: [ "340", "361" ]
+      aenderungPanrDurchWegfallvermerkUnzulaessig: [ "345", "827" ]
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Kommunale Unfallversicherung"
+          name2: "Bayern (KUVB)"
+          plz: "80791"
+          ort: "München"
+        annahmedokument:
+          name: "Kommunale Unfallversicherung Bayern"
+          plz: "80791"
+          ort: "München"
+    - id: "9eb7ab3a-bb78-4156-9456-4a0db8882abf"
+      name: "Gemeinde-Unfallversicherungsverband Oldenburg"
+      panrs: [ "343", "526" ]
+      leistungszweig: "UV"
+      aenderungPanrDurchWegfallvermerkUnzulaessig: [ "343", "526" ]
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Gemeinde-Unfallversicherungsverband"
+          name2: "Oldenburg"
+          strasse: "Postfach 27 61"
+          plz: "26017"
+          ort: "Oldenburg"
+    - id: "cfae56c8-a46a-4911-84d1-8649b78dfc3d"
+      name: "Braunschweigischer Gemeinde-Unfallversicherungsverband"
+      panrs: [ "344", "547" ]
+      leistungszweig: "UV"
+      aenderungPanrDurchWegfallvermerkUnzulaessig: [ "344", "547" ]
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Braunschweigischer"
+          name2: "Gemeinde-Unfallversicherungsverband"
+          strasse: "Postfach 15 42"
+          plz: "38005"
+          ort: "Braunschweig"
+    - id: "f65ad026-e767-4d89-bd2b-100ddce5d8fb"
+      name: "Unfallkasse Sachsen-Anhalt"
+      panrs: [ "349", "529" ]
+      leistungszweig: "UV"
+      aenderungPanrDurchWegfallvermerkUnzulaessig: [ "349", "529" ]
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Unfallkasse Sachsen-Anhalt"
+          plz: "39258"
+          ort: "Zerbst"
+        annahmedokument:
+          name: "Unfallkasse Sachsen-Anhalt"
+          plz: "39261"  
+          ort: "Zerbst/Anhalt"
+          strasse: "Käsperstr."
+          hausnummer: "31"
+    - id: "d0c4a5e7-ccfc-4714-85e8-ea0de954b646"
+      name: "Unfallkasse Freie Hansestadt Bremen"
+      panrs: [ "350" ]
+      leistungszweig: "UV"
+      selbstZahler: [ "350" ]
+    - id: "5fc15a24-118a-46a7-8d41-a29f095e1d92"
+      name: "Feuerwehr-Unfallkasse Niedersachsen"
+      panrs: [ "355", "356" ]
+      leistungszweig: "UV"
+      selbstZahler: [ "355", "356" ]
+    - id: "69963d5b-f87a-4afb-99da-0086dc580507"
+      name: "Unfallkasse Nordrhein-Westfalen"
+      panrs: [ "366" ]
+      leistungszweig: "UV"
+      selbstZahler: [ "366" ]
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Unfallkasse NRW Regionaldirektion"
+          name2: "Rheinland -Stabstelle GUSO-"
+          strasse: "Heyestr."
+          hausnummer: "99"
+          plz: "40625"
+          ort: "Düsseldorf"
+    - id: "9cf6e1ee-13cc-437d-917f-063476cf9b29"
+      name: "Unfallkasse Nord Schleswig-Holstein Hamburg"
+      panrs: [ "371", "381", "396" ]
+      leistungszweig: "UV"
+      selbstZahler: [ "371", "381", "396" ]
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Unfallkasse Nord Schleswig-"
+          name2: "Holstein Hamburg"
+          strasse: "Postfach 76 03 25"
+          plz: "22053"
+          ort: "Hamburg"
+    - id: "d23642d6-ece0-421a-8701-11f6a5cd491a"
+      name: "Bayerische Landesunfallkasse"
+      panrs: [ "372", "388", "828" ]
+      leistungszweig: "UV"
+      selbstZahler: [ "372" ]
+      aenderungPanrDurchWegfallvermerkUnzulaessig: [ "388", "828" ]
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Bayerische Landesunfallkasse"
+          plz: "80791"
+          ort: "München"
+        annahmedokument:
+          name: "Kommunale Unfallversicherung Bayern"  
+          plz: "80791"  
+          ort: "München"
+    - id: "ae6dc827-aa74-47ef-a87c-3c5ded251724"
+      name: "Landesunfallkasse Nordrhein-Westfalen"
+      panrs: [ "377" ]
+      leistungszweig: "UV"
+      selbstZahler: [ "377" ]
+    - id: "c73b74db-d266-4498-8f56-f99942e0ec6b"
+      name: "Gemeinde-Unfallversicherungsverband Hannover"
+      panrs: [ "385", "831" ]
+      leistungszweig: "UV"
+      aenderungPanrDurchWegfallvermerkUnzulaessig: [ "385", "831" ]
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Gemeinde-Unfallversicherungsverband"
+          name2: "Hannover"
+          strasse: "Postfach 81 03 61"
+          plz: "30503"
+          ort: "Hannover"
+    - id: "4972b6b8-db34-4b77-9e12-3beda8dfd4bd"
+      name: "Unfallkasse Saarland"
+      panrs: [ "398", "517" ]
+      leistungszweig: "UV"
+      selbstZahler: [ "398", "517" ]
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Unfallkasse Saarland"
+          strasse: "Postfach 20 02 80"
+          plz: "66043"
+          ort: "Saarbrücken"
+    - id: "eca3ff29-a531-4d94-ac99-a6f269ef055c"
+      name: "SVLFG Landwirtschaftliche Alterskasse"
+      panrs: [ "458" ]
+      leistungszweig: "BR"
+      selbstZahler: [ "458" ]
+    - id: "79a2a4a9-17f6-4c97-886e-d652c1986fd4"
+      name: "BCB Payments (Betriebs-Center für Banken)"
+      panrs: [ "475", "575" ]
+      leistungszweig: "BR"
+      aenderungPanrDurchWegfallvermerkUnzulaessig: [ "475", "575" ]
+    - id: "e7fa8652-effb-4673-b954-201c334ffe44"
+      name: "Sammel-Betriebsrenten"
+      panrs: [ "479", "480", "579", "580" ]
+      leistungszweig: "BR"
+      aenderungPanrDurchWegfallvermerkUnzulaessig: [ "580" ]
+    - id: "6267897e-a2be-41d3-9e07-5c8b3fab400f"
+      name: "Union-Druckerei und Verlagsanstalt GmbH"
+      panrs: [ "485", "585" ]
+      leistungszweig: "BR"
+      aenderungPanrDurchWegfallvermerkUnzulaessig: [ "485", "585" ]
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Union-Druckerei und"
+          name2: "Verlagsanstalt GmbH"
+          strasse: "Basler Platz"
+          hausnummer: "2"
+          plz: "60329"
+          ort: "Frankfurt am Main"
+    - id: "27743cb3-dbdc-4e97-af6b-6e4a8f1a6dd7"
+      name: "SD Worx GmbH - Nokia Solutions and Networks GmbH & Co. KG"
+      panrs: [ "572" ]
+      betriebsnummer: "67324956"
+      leistungszweig: "BR"
+      aenderungPanrDurchWegfallvermerkUnzulaessig: [ "572" ]
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "SD Worx GmbH - Nokia Solutions and"
+          name2: "Networks GmbH&Co KG - Fr. Schweigel"
+          strasse: "Gewerbestr."
+          hausnummer: "19"
+          plz: "08115"
+          ort: "Lichtentanne"
+        annahmedokument:
+          name: "SD Worx GmbH"  
+          plz: "08115"  
+          ort: "Lichtentanne"
+          strasse: "Gewerbestr."
+          hausnummer: "19"
+    - id: "3c8ac384-3db0-4b2e-bba9-5c39edba44e3"
+      name: "EHG Elektroholding Gmbh, Altersversorgung"
+      panrs: [ "573" ]
+      leistungszweig: "BR"
+      aenderungPanrDurchWegfallvermerkUnzulaessig: [ "573" ]
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "EHG Elektroholding GmbH"
+          strasse: "096/Z"
+          hausnummer: "100"
+          plz: "70546"
+          ort: "Stuttgart"
+        annahmedokument:
+          name: "ADP Employer Services GmbH"  
+          plz: "01099"  
+          ort: "Dresden"
+          strasse: "Glacisstr."
+          hausnummer: "6"
+    - id: "368095c3-595d-4642-aad4-4e9092da70a7"
+      name: "DB Privat- und Firmenkundenbank AG"
+      panrs: [ "553", "663" ]
+      leistungszweig: "ZV"
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Versorgungsanstalt der Deutschen"
+          name2: "Bundespost - DSL-Bank"
+          strasse: "Postfach 30 06 80"
+          plz: "70446"
+          ort: "Stuttgart"
+    - id: "d670f010-3edf-4ff2-b57f-ea2be424456d"
+      name: "Versorgungsanstalt des Bundes und der Länder"
+      panrs: [ "565", "665" ]
+      leistungszweig: "ZV"
+      aenderungPanrDurchWegfallvermerkUnzulaessig: [ "565" ]
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Versorgungsanstalt des"
+          name2: "Bundes und der Länder"
+          plz: "76128"
+          ort: "Karlsruhe"
+        annahmedokument:
+          name: "Versorgungsanstalt des Bundes und der Länder / CONITAS GmbH"  
+          plz: "76240"  
+          ort: "Karlsruhe"
+    - id: "cec1061c-0fcf-48bc-ac82-be41d7f772d1"
+      name: "Zusatzversorgungskasse des Baugewerbes AG, Rentenbeihilfen"
+      panrs: [ "570", "574", "670", "674" ]
+      betriebsnummer: "10600029"
+      leistungszweig: "ZV"
+      aenderungPanrDurchWegfallvermerkUnzulaessig: [ "570", "574", "670", "674" ]
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Zusatzversorgungskasse des"
+          name2: "Baugewerbes AG"
+          plz: "65175"
+          ort: "Wiesbaden"
+        annahmedokument:
+          name: "Zusatzversorgungskasse des Baugewerbes VVaG"  
+          plz: "65052"  
+          ort: "Wiesbaden"
+          strasse: "Postfach 62 60"
+    - id: "a1b6d002-aada-48fa-8c40-9fee330cc6be"
+      name: "Bundesanstalt für Post und Telekommunikation"
+      panrs: [ "584", "586", "684", "686" ]
+      leistungszweig: "ZV"
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Bundesanstalt für Post und Tele-"
+          name2: "kommunikation Deutsche Bundespost"
+          plz: "53222"
+          ort: "Bonn"
+    - id: "2ab9329c-257b-4c07-88c1-5f21dc884cf0"
+      name: "BARMER"
+      panrs: [ "587", "687" ]
+      leistungszweig: "ZV"
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "BARMER Hauptverwaltung"
+          name2: "Betriebliche Altersversorgung"
+          strasse: "Lichtscheider Str."
+          hausnummer: "89"
+          plz: "42285"
+          ort: "Wuppertal"
+    - id: "472e1554-a744-4bd7-a09a-7c60f2f37f0e"
+      name: "Deutsche Post AG"
+      panrs: [ "588", "688" ]
+      leistungszweig: "ZV"
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Deutsche Post AG"
+          name2: "Zentrale"
+          plz: "53250"
+          ort: "Bonn"
+    - id: "11d71d4b-07ef-4bf5-b25f-a45139709a56"
+      name: "Versorgungskasse der Bundesdruckerei GmbH e.V. (Parallelverpflichtung)"
+      panrs: [ "589", "689" ]
+      leistungszweig: "ZV"
+      antwortetNichtAufAuskunftsersuchen: [ "589", "689" ]
+      liefertKeineAuskunftsersuchen: true
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Versorgungskasse der"
+          name2: "Bundesdruckerei GmbH e.V."
+          strasse: "Oranienstr."
+          hausnummer: "91"
+          plz: "10958"
+          ort: "Berlin"
+    - id: "d500e7ae-3790-42e8-b115-030306c2a1f9"
+      name: "Post AG"
+      panrs: [ "590", "592", "593", "594", "596", "597", "690", "692", "693", "694", "695", "696", "697" ]
+      leistungszweig: "ZV"
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Versorgungsanstalt der"
+          name2: "Deutschen Bundespost"
+          strasse: "Postfach 30 06 80"
+          plz: "70446"
+          ort: "Stuttgart"
+        annahmedokument:
+          name: "Versorgungsanstalt der Deutschen Bundespost"  
+          plz: "70191"  
+          ort: "Stuttgart"
+          strasse: "Ehmannstr."
+          hausnummer: "80-82"
+    - id: "609364e8-89c1-47b8-b0d5-4533b3411bf1"
+      name: "DB Privat- und Firmenkundenbank AG"
+      panrs: [ "591", "691" ]
+      leistungszweig: "ZV"
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Deutsche Postbank AG"
+          name2: "Abteilung Personaldienste"
+          strasse: "Postfach 40 00"
+          plz: "53105"
+          ort: "Bonn"
+    - id: "2b1e466d-0c13-443c-b7dd-7a7c9c13c9df"
+      name: "Bundesdruckerei GmbH"
+      panrs: [ "598", "698" ]
+      leistungszweig: "ZV"
+      anschrift:
+        lieferscheinFehlerdatei:
+          name1: "Bundesdruckerei GmbH"
+          strasse: "Oranienstr."
+          hausnummer: "91"
+          plz: "10958"
+          ort: "Berlin"
