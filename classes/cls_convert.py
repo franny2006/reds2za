@@ -281,7 +281,7 @@ class cls_convertReds():
             datei.write(vorlaufsatz + '\n')
             for anliegen in anliegenGesamt:
                 zeile = ''.join([str(wert) for wert in anliegen.values()])
-                datei.write(zeile + '\n')
+                datei.write(zeile + 'Ÿ' + '\n')
             datei.write(nachlaufsatz + '\n')
 
 
