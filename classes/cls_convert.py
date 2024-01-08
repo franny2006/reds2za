@@ -246,7 +246,7 @@ class cls_convertReds():
         fueller01 = " "
         betriebsnrAbsender = dictLeistungstraeger['betriebsnummer']
         betriebsnrEmpfaenger = "99999999"
-        erstellungsdatum = date.today()
+        erstellungsdatum = datetime.strptime(self.datumDatei, "%Y-%m-%d")
         erstellungsdatum = erstellungsdatum.strftime("%d%m%y")
         nameAbsender = str(dictLeistungstraeger['kurzname']).ljust(15)
         nameEmpfaenger = str("DBP Rente").ljust(15)
@@ -281,7 +281,7 @@ class cls_convertReds():
             datei.write(vorlaufsatz + '\n')
             for anliegen in anliegenGesamt:
                 zeile = ''.join([str(wert) for wert in anliegen.values()])
-                datei.write(zeile + 'Ÿ' + '\n')
+                datei.write(zeile + 'Å¸' + '\n')
             datei.write(nachlaufsatz + '\n')
 
 
