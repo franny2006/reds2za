@@ -3470,6 +3470,15 @@
                 <ns1:InitialWert>zero</ns1:InitialWert>
                 <ns1:InitialWertNull>true</ns1:InitialWertNull>
             </ns1:Feld>
+            <ns1:Feld name="abzlbe">
+                <ns1:StartPosition>109</ns1:StartPosition>
+                <ns1:Laenge>1</ns1:Laenge>
+                <ns1:Type>
+                    <ns1:TypeReference>Text</ns1:TypeReference>
+                </ns1:Type>
+                <ns1:InitialWert>zero</ns1:InitialWert>
+                <ns1:InitialWertNull>true</ns1:InitialWertNull>
+            </ns1:Feld>
         </ns1:Satzart>
         <ns1:Satzart name="RechnungsdatenUV" type="fix" schluessel="71" laenge="91" min_kardinalitaet="1" max_kardinalitaet="1">
             <ns1:Feld name="satzart">

@@ -1,19 +1,31 @@
 import pandas as pd
 import sys
+import os
+import requests
+import random
 from datetime import date, timedelta, datetime
 from dateutil.relativedelta import *
 from tkinter import filedialog
 
-from classes.cls_readReds import cls_readReds
+#from classes.cls_readReds import cls_readReds
+from classes.cls_readRedsfromDb import cls_readRedsFromDb
+from classes.cls_convertSchluessel import cls_schluesseltabellen
+from classes.cls_prnrMapping import cls_prnrMapping
 
 class cls_convertReds():
     def __init__(self):
+        # individuelle Parameter
         self.datumDatei = '2024-01-04'
-        self.aimo = '02.24'
+        self.aimo = '11.21'
         self.sendungsnummer =  "1"
         self.laufendeNummerLieferung = "1"
+        self.selectAusRedsDatenbank = "select * from V_VOAT_21 where voat = 21 and sa_71_id is NULL and sa_72_id is NULL and Sa_74_id is NULL limit 20"
+        self.zeigeAlleTestfaelle = False
 
-        self.clsReds = cls_readReds()
+
+
+        # Keywords
+        sortierungSa = "FT, 11, 13, 14, 05, 12, 15, 16, 17, 19, 90, 95, B3, B4, B5, M1, M3, M4, PZ, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 91"
         self.dictKeywords = {
             "#laenge":          self.keyword_laengeSl,
             "#auftragsdatum":   self.keyword_auftragsdatum,
@@ -28,6 +40,15 @@ class cls_convertReds():
         self.lfdNr = 0
         self.anzBen = 0
 
+        self.sortSa = sortierungSa.split(", ")
+
+        #self.clsReds = cls_readReds()
+        self.clsRedsFromDb = cls_readRedsFromDb()
+        self.writePrnrMapping = cls_prnrMapping()
+        self.listPrnrMapping = []
+
+
+
 
 
 
@@ -35,8 +56,27 @@ class cls_convertReds():
         # Einlesen der Mappingtabelle
         self.mappingDf = self.readMappingTabelle()
 
+        # Initialisieren der Schluesselwerte
+        convertKeys = cls_schluesseltabellen()
+
         # Einlesen der REDS-Datei
-        self.redsDf = self.clsReds.getReds()
+    #    self.redsDf = self.clsReds.getReds()
+    #    print(self.redsDf.iloc[0].to_string())
+
+        self.redsDf = self.clsRedsFromDb.readDb(self.selectAusRedsDatenbank)
+   #     print(self.redsDf.iloc[0].to_string())
+   #     sys.exit()
+
+        # HauptPanr ermitteln und Klasse initialisieren, um die Anliegen-PANR zu pruefen
+        self.hauptPanr = self.identifyHauptPanr()
+        from cls_parseLeistungstraeger import cls_parseLeistungstraeger
+        self.parseLtr = cls_parseLeistungstraeger()
+
+        dictLeistungstraeger = self.parseLtr.parsePanr(self.hauptPanr)
+        if dictLeistungstraeger['panrExists'] == False:
+            self.hauptPanr = dictLeistungstraeger['panr']
+            print("HauptPANR wurde ersetzt: ", self.hauptPanr)
+
 
         anliegenGesamt = []
         for self.anliegenNr in self.redsDf.index:
@@ -46,16 +86,17 @@ class cls_convertReds():
             self.readSatzartenInReds(self.anliegenNr)
             print("Liste der neu ermittelten Satzarten:", self.listeSatzarten)
 
-            print("************* Anliegen DF:", self.anliegenNr, '*********', self.redsDf.loc[[self.anliegenNr]])
+    #        print("************* Anliegen DF:", self.anliegenNr, '*********', self.redsDf.loc[[self.anliegenNr]].to_string())
             anliegen = {}
 
             self.laengeGesamt = self.readSatzartlaenge(self.listeSatzarten)
 
+            # Iterieren der im REDS gefundenen Satzarten
             for satzart in self.listeSatzarten:
                 dfSaFelder = self.mappingDf.loc[self.mappingDf['Satzart'] == satzart]
 
                 for saFeldIndex in dfSaFelder.index:
-                    # print(saFeld['Satzart'], saFeld['Feld'], saFeld['REDS_Feld'])
+             #       print(dfSaFelder['Satzart'], dfSaFelder['Feld'], dfSaFelder['REDS_Feld'])
 
                     # Feld initialisieren
                     feldname = str(dfSaFelder['Satzart'][saFeldIndex]) + ' - ' + str(dfSaFelder['Feld'][saFeldIndex])
@@ -64,13 +105,16 @@ class cls_convertReds():
 
                     # Feldinhalt aus REDS-Satz ermitteln, sofern kein Titel und nicht leer (in Satzart- und Feldbezeichnung sowie Feldinhalt) und kein Keyword
                     if dfSaFelder['Feld'][saFeldIndex] == "satzartbezeichnungSZAT":
+                        # Satzartbezeichnung
                         feldinhalt = dfSaFelder['Satzart'][saFeldIndex]
 
                     elif pd.isna(dfSaFelder['REDS_Satzart'][saFeldIndex]) or pd.isna(dfSaFelder['REDS_Feld'][saFeldIndex]):
+                        # Kein Mapping vorhanden
                         pass
 
                     else:
                         if dfSaFelder['REDS_Feld'][saFeldIndex][:1] == "#":
+                            # Keyword
                             keyword = self.dictKeywords.get(dfSaFelder['REDS_Feld'][saFeldIndex])
                             if dfSaFelder['REDS_Feld'][saFeldIndex] == "#reserve":
                                 feldinhalt = keyword(dfSaFelder['Feldlnge'][saFeldIndex], dfSaFelder['art'][saFeldIndex])
@@ -82,13 +126,46 @@ class cls_convertReds():
 
                         else:
                             feldnameReds = str(dfSaFelder['REDS_Satzart_Schluessel'][saFeldIndex]) + ' - ' + str(dfSaFelder['REDS_Feld'][saFeldIndex])
-                            try:
+                            feldnameRedsAlternativ = str(dfSaFelder['REDS_Satzart_Schluessel_2'][saFeldIndex]) + ' - ' + str(dfSaFelder['REDS_Feld_2'][saFeldIndex])
+               #             print(self.redsDf.iloc[self.anliegenNr].to_string())
+
+                            if not pd.isna(self.redsDf.iloc[self.anliegenNr][feldnameReds]):
                                 feldinhalt = self.redsDf.iloc[self.anliegenNr][feldnameReds]
-                            except Exception as error:
-                                feldinhalt = ""
-                                #print("Kein Feldinhalt gefunden")
-                                print(error)
+                               # print("Feldname eins", feldnameReds, feldinhalt)
+                            else:
+                       #         print("Problemfeld", dfSaFelder['Satzart'][saFeldIndex], dfSaFelder['Feld'][saFeldIndex], dfSaFelder['REDS_Feld_2'][saFeldIndex])
+                                if dfSaFelder['REDS_Feld_2'][saFeldIndex][:1] == "#":
+                                    keyword = self.dictKeywords.get(dfSaFelder['REDS_Feld_2'][saFeldIndex])
+                                    if dfSaFelder['REDS_Feld_2'][saFeldIndex].lower() == "#reserve":
+                                  #      print("Daten:", dfSaFelder['Feldlnge'][saFeldIndex], dfSaFelder['art'][saFeldIndex])
+                                        feldinhalt = keyword(dfSaFelder['Feldlnge'][saFeldIndex], dfSaFelder['art'][saFeldIndex])
+                                  #      print("Kein Feldinhalt gefunden / Reserve genommen: ", feldinhalt)
+                                elif not pd.isna(self.redsDf.iloc[self.anliegenNr][feldnameRedsAlternativ]):
+                                    feldinhalt = self.redsDf.iloc[self.anliegenNr][feldnameRedsAlternativ]
+                               #     print("Feldname Alternativ", feldnameRedsAlternativ, feldinhalt)
+                                else:
+                                #    print("Keine Ahnung mehr")
+                                    pass
+
+
+
+                    # Feldlaenge final kürzen oder verlängern
+                   # print("Vor finale: ", feldinhalt, feldart, dfSaFelder['Feldlnge'][saFeldIndex])
+                    feldinhalt = self.feldInitialisieren(feldinhalt, feldart, dfSaFelder['Feldlnge'][saFeldIndex], False)
+
+                    # Gegen Schluesseltabelle validieren, ob das Feld einen nach RZB gueltigen Wert enthaelt
+                    print("Wert gegen Schluesseltabelle checken:", feldname, feldinhalt)
+                    convertedKey = convertKeys.checkKey(feldname, feldinhalt)
+                    if convertedKey != False:
+                        print("Wert veraendert: ", feldname, feldinhalt, convertedKey)
+                        feldinhalt = convertedKey
+
+
                     anliegen[feldname] = feldinhalt
+
+
+
+
                     #print(saFeldIndex, dfSaFelder['Satzart'][saFeldIndex], dfSaFelder['Feld'][saFeldIndex], "'", feldinhalt, "'" )
 
             # Zahlbeginn ermitteln und ueberschreiben
@@ -98,13 +175,42 @@ class cls_convertReds():
                         zlbe = self.calculateZlbe(anliegen)
                         anliegen['61 - zahlbeginnZLBE'] = zlbe
 
+            # PANR überprüfen und ggf. ueberschreiben (falls nicht in PANR-Liste)
+            panrOriginal = anliegen['FT - panr']
+            panrNeu = anliegen['FT - panr']
+            dictLeistungstraeger = self.parseLtr.parsePanr(self.hauptPanr)
+            if anliegen['FT - panr'] not in dictLeistungstraeger['panrListe']:
+                anliegen['FT - panr'] = self.hauptPanr
+                panrNeu = self.hauptPanr
+
+            # PRNR korrigieren und originale und neue PRNR in Liste speichern
+            prnrOriginal = anliegen['FT - prnr']
+            prnrNeu = self.korrekturPrnr(anliegen)
+            self.createPrnrMappingList(prnrOriginal, prnrNeu, panrOriginal, panrNeu, anliegen['FT - voat'])
+            anliegen['FT - prnr'] = prnrNeu
+
+            # Adressen korrigieren
+            anliegen = self.korrekturAdresse(anliegen)
 
             # Aufbausumme errechnen und ueberschreiben
             anliegen['FT - beitragssummeBTSU'] = self.beitragssummeBerechnen(anliegen)
+      #      print("Aufbausumme:", anliegen['FT - beitragssummeBTSU'], anliegen['61 - zahlbetragZLBT'])
 
             anliegenGesamt.append(anliegen)
 
         self.createDatei(anliegenGesamt)
+
+
+    def createPrnrMappingList(self, prnrOriginal, prnrNeu, panrOriginal, panrNeu, voat):
+        prnrDict = {
+            'prnrOriginal': prnrOriginal,
+            'prnrNeu': prnrNeu,
+            'panrOriginal': panrOriginal,
+            'panrNeu': panrNeu,
+            'voat': voat
+        }
+        self.listPrnrMapping.append(prnrDict)
+
 
     def checkFieldValidity(self, feldIndex):
         fieldValid = False
@@ -131,14 +237,19 @@ class cls_convertReds():
                 feldnameReds = feldnameReds.split(" - ")[1]
 
                 gefundene_zeilen = self.mappingDf[(self.mappingDf['REDS_Feld'] == feldnameReds) & (self.mappingDf['REDS_Satzart_Schluessel'] == saReds)]
-            #    print(gefundene_zeilen.to_string())
+                # print(gefundene_zeilen.to_string())
                 if not gefundene_zeilen.empty:
                     saDs10 = gefundene_zeilen['Satzart'].iloc[0]
-                    #print("REDS-DF:", anliegenNr, saReds, saDs10, feldnameReds, feldinhaltReds)
+                    print("REDS-DF:", anliegenNr, saReds, saDs10, feldnameReds, feldinhaltReds)
                 else:
-                    #print("kein Mapping moeglich fuer ", anliegenNr, saReds, '--', feldnameReds, feldnameReds)
-                    pass
-
+                    # Prüfen der Mappingvarianten (für Blockfelder)
+                    gefundene_zeilen = self.mappingDf[(self.mappingDf['REDS_Feld_2'] == feldnameReds) & (self.mappingDf['REDS_Satzart_Schluessel_2'] == saReds)]
+                    if not gefundene_zeilen.empty:
+                        saDs10 = gefundene_zeilen['Satzart'].iloc[0]
+                    #    print("REDS-DF:", anliegenNr, saReds, saDs10, feldnameReds, feldinhaltReds)
+                    else:
+                        pass
+                    #    print("kein Mapping moeglich fuer ", anliegenNr, saReds, '--', feldnameReds, feldnameReds)
 
                 if not saDs10 in self.listeSatzarten and saDs10 != "":
                     self.listeSatzarten.append(saDs10)
@@ -146,12 +257,15 @@ class cls_convertReds():
                 #print("kein Feldinhalt fuer ", feldnameReds)
                 pass
 
+        # Reihenfolge anpassen
+        self.listeSatzarten = sorted(self.listeSatzarten, key=lambda x: self.sortSa.index(x))
+
         return feldinhaltReds
 
 
 
     def readSatzartlaenge(self, listeSatzarten):
-        laengeGesamt = 0
+        laengeGesamt = 1
         for satzart in listeSatzarten:
          #   saLaenge = self.mappingDf.groupby('Satzart')['Feldlnge'].sum()
             saLaenge = self.mappingDf.loc[self.mappingDf['Satzart'] == satzart, 'Feldlnge'].sum()
@@ -177,9 +291,12 @@ class cls_convertReds():
                 feldinhalt = " "
 
         if feldart == "zero":
+            feldinhalt = str(feldinhalt).replace(" ", "0")
             feldinhalt = str(feldinhalt).zfill(laenge)
+            feldinhalt = feldinhalt[-laenge:]
         else:
             feldinhalt = str(feldinhalt[:laenge]).ljust(laenge)
+
         return feldinhalt
 
     def calculateZlbe(self, anliegen):
@@ -226,19 +343,89 @@ class cls_convertReds():
         print("ZLBE: ", zlbe)
         return zlbe
 
+    def korrekturPrnr(self, anliegen):
+        try:
+            geburtsdatum = anliegen['12 -geburtsdatumBerechtigterGBDTBC']
+        except:
+            geburtsdatum = '19690000'
+        try:
+            buchstabe = anliegen['11 - zunameZUNAME'][0]
+            if buchstabe in ('+', "="):
+                buchstabe = "A"
+        except:
+            buchstabe = "A"
+        try:
+            anredeSchluessel = anliegen['11 - anredeschluesselANREDSC']
+            if anredeSchluessel == 1:
+                geschlecht = '05'
+            else:
+                geschlecht = '55'
+        except:
+            geschlecht = '00'
+        if self.lfdNr < 1000:
+            anhang = str(self.lfdNr).zfill(3)
+        else:
+            anhang = str(self.lfdNr)[-3:].zfill(3)
+        prnrKorrigiert = geburtsdatum + buchstabe + geschlecht + anhang
+        print("PRNR: ", anliegen['FT - prnr'], prnrKorrigiert)
+        return prnrKorrigiert
+
+    def korrekturAdresse(self, anliegen):
+        if '13 - zahlungsempfaengerPlzPLZ' in anliegen:
+            headers = {
+                'Content-type': 'application/json'}
+            adresseValide = requests.post('http://127.0.0.1:5005/api/v1.0/getAdresse/3', headers=headers)
+            adresseData = adresseValide.json()
+            print(adresseData)
+
+            if '13 - zahlungsempfaengerPlzPLZ' in anliegen:
+                anliegen['13 - zahlungsempfaengerPlzPLZ'] = str(adresseData['Adresse'][0]['postleitzahl'][:10]).ljust(10)
+            if '13 - zahlungsempfaengerOrtOT' in anliegen:
+                anliegen['13 - zahlungsempfaengerOrtOT'] = str(adresseData['Adresse'][0]['ort_name'][:34]).ljust(34)
+            if '14 - strasseZahlungsempfaengerSE' in anliegen:
+                anliegen['14 - strasseZahlungsempfaengerSE'] = str(adresseData['Adresse'][0]['strasse_name'][:33]).ljust(33)
+            if '14 - hausnummerZahlumgsempfaengerHAUSNR' in anliegen:
+                anliegen['14 - hausnummerZahlumgsempfaengerHAUSNR'] = str(random.randrange(1, 120)).ljust(9)
+
+            # Berechtigter
+            if 'B3 - postleitzahlBerechtigterPLZBC' in anliegen:
+                anliegen['B3 - postleitzahlBerechtigterPLZBC'] = str(adresseData['Adresse'][1]['postleitzahl'][:10]).ljust(10)
+            if 'B3 - ortBerechtigterOTBC' in anliegen:
+                anliegen['B3 - ortBerechtigterOTBC'] = str(adresseData['Adresse'][1]['ort_name'][:34]).ljust(34)
+            if 'B4 - strasseBerechtigterSEBC' in anliegen:
+                anliegen['B4 - strasseBerechtigterSEBC'] = str(adresseData['Adresse'][1]['strasse_name'][:33]).ljust(33)
+            if 'B4 - hausnummerBerechtigterHAUSNRBC' in anliegen:
+                anliegen['B4 - hausnummerBerechtigterHAUSNRBC'] = str(random.randrange(1, 120)).ljust(9)
+
+            # Mitteilungsempfänger
+            if 'M3 - plzMitteilungsempfaengerMT' in anliegen:
+                anliegen['M3 - plzMitteilungsempfaengerMT'] = str(adresseData['Adresse'][2]['postleitzahl'][:10]).ljust(10)
+            if 'M3 - ortMitteilungsempfaengerOTMT' in anliegen:
+                anliegen['M3 - ortMitteilungsempfaengerOTMT'] = str(adresseData['Adresse'][2]['ort_name'][:34]).ljust(34)
+            if 'M4 - strasseZahlungsempfaengerSEMT' in anliegen:
+                anliegen['M4 - strasseZahlungsempfaengerSEMT'] = str(adresseData['Adresse'][2]['strasse_name'][:33]).ljust(33)
+            if 'M4 - hausnummerZahlumgsempfaengerHAUSNRMT' in anliegen:
+                anliegen['M4 - hausnummerZahlumgsempfaengerHAUSNRMT'] = str(random.randrange(1, 120)).ljust(9)
+
+            print("Nachher:")
+            try:
+                print(anliegen['13 - zahlungsempfaengerPlzPLZ'], anliegen['13 - zahlungsempfaengerOrtOT'], anliegen['14 - strasseZahlungsempfaengerSE'], anliegen['14 - hausnummerZahlumgsempfaengerHAUSNR'])
+            except:
+                pass
+            return anliegen
+
 
     def identifyHauptPanr(self):
         haufigstePanr = self.redsDf['FT - panr'].value_counts().idxmax()
         print("Haeufigste PANR:", haufigstePanr)
+        return haufigstePanr
 
     def createVorlaufsatz(self):
         # Haupt-PANR ermitteln
         hauptPanr = self.identifyHauptPanr()
 
         # Betriebsnummer und Ltr-Name zu PANR aus Leistungstraeger.yml ermitteln
-        from cls_parseLeistungstraeger import cls_parseLeistungstraeger
-        parseLtr = cls_parseLeistungstraeger()
-        dictLeistungstraeger = parseLtr.parsePanr(hauptPanr)
+        dictLeistungstraeger = self.parseLtr.parsePanr(hauptPanr)
         print("Vorsatz-LTR:", dictLeistungstraeger)
 
         # Vorlaufsatz aufbauen
@@ -283,6 +470,19 @@ class cls_convertReds():
                 zeile = ''.join([str(wert) for wert in anliegen.values()])
                 datei.write(zeile + 'Ÿ' + '\n')
             datei.write(nachlaufsatz + '\n')
+
+        # Dateiname extrahieren
+        verzeichnis = os.path.dirname(filenameZa)
+        dateinameXls = verzeichnis + '/' + os.path.splitext(os.path.basename(filenameZa))[0] + "_testdaten.xlsx"
+
+        # Konvertieren der Liste von Dictionaries in einen DataFrame
+        df_anliegen = pd.DataFrame(anliegenGesamt)
+
+        # DataFrame aller Anliegen als Excel-Datei speichern
+        df_anliegen.to_excel(dateinameXls, index=False)
+
+        # Mapping der PRNR für jedes Anliegen in DB schreiben
+        self.writePrnrMapping.writeMapping(filenameZa, self.listPrnrMapping, self.zeigeAlleTestfaelle)
 
 
 

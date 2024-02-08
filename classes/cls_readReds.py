@@ -61,7 +61,7 @@ class cls_readReds():
 
      #   try:
         satzartAttrDict = self.parseSatzart(root, "Satzarten/Satzart[@schluessel='" + str(satzart) + "']")
-#         print(satzartAttrDict)
+     #   print(satzartAttrDict)
 
         for feld in satzartAttrDict['Satzart']['felder']:
             relativePosition = int(satzartAttrDict['Satzart']['felder'][feld]['StartPosition'])
@@ -71,7 +71,7 @@ class cls_readReds():
             inhalt = redsDs[startPosition:startPosition + laenge]
             endposition = startPosition + laenge
             feldname = str(satzart) + " - " + str(feld)
-#             print(feldname + ": " + str(inhalt))
+        #    print(feldname + ": " + str(inhalt))
             redsDict[feldname] = [inhalt]
 
             # for a, b in satzartAttrDict['Satzart']['felder'][feld].items():

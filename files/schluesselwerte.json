@@ -1,0 +1,15 @@
+{
+  "61 - abgetrennteZahlungZLZL": {
+    "0": "Grundstellung",
+    "1": "Stammrente",
+    "5": "Abgetrennte Zahlung"
+  },
+  "61 - merkmalKostenabzugMMKO": {
+    "0": "Grundstellung",
+    "1": "Kostenabzug für EU-Scheckzahlungen",
+    "2": "unbesetzt",
+    "3": "ZzV",
+    "4": "Rückwirkende Kostenerstattung",
+    "5": "Anwendung Härtefallregelung"
+  }
+}
