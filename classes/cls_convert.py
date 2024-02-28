@@ -11,6 +11,7 @@ from tkinter import filedialog
 from classes.cls_readRedsfromDb import cls_readRedsFromDb
 from classes.cls_convertSchluessel import cls_schluesseltabellen
 from classes.cls_prnrMapping import cls_prnrMapping
+from cls_db import cls_dbAktionen
 
 class cls_convertReds():
     def __init__(self):
@@ -19,7 +20,7 @@ class cls_convertReds():
         self.aimo = '11.21'
         self.sendungsnummer =  "1"
         self.laufendeNummerLieferung = "1"
-        self.selectAusRedsDatenbank = "select * from V_VOAT_21 where voat = 21 and sa_71_id is NULL and sa_72_id is NULL and Sa_74_id is NULL limit 20"
+        self.selectAusRedsDatenbank = "select * from V_VOAT_21 where voat = 21 and sa_71_id is NULL and sa_72_id is NULL and Sa_74_id is NULL"
         self.zeigeAlleTestfaelle = False
 
 
@@ -46,6 +47,9 @@ class cls_convertReds():
         self.clsRedsFromDb = cls_readRedsFromDb()
         self.writePrnrMapping = cls_prnrMapping()
         self.listPrnrMapping = []
+
+        # DB Connection initialisieren
+        self.db = cls_dbAktionen()
 
 
 
@@ -473,7 +477,8 @@ class cls_convertReds():
 
         # Dateiname extrahieren
         verzeichnis = os.path.dirname(filenameZa)
-        dateinameXls = verzeichnis + '/' + os.path.splitext(os.path.basename(filenameZa))[0] + "_testdaten.xlsx"
+        dateinamePur = os.path.splitext(os.path.basename(filenameZa))[0]
+        dateinameXls = verzeichnis + '/' + dateinamePur + "_testdaten.xlsx"
 
         # Konvertieren der Liste von Dictionaries in einen DataFrame
         df_anliegen = pd.DataFrame(anliegenGesamt)
@@ -483,6 +488,11 @@ class cls_convertReds():
 
         # Mapping der PRNR für jedes Anliegen in DB schreiben
         self.writePrnrMapping.writeMapping(filenameZa, self.listPrnrMapping, self.zeigeAlleTestfaelle)
+
+        # Erzeugte Datei in DB loggen
+        values = [self.selectAusRedsDatenbank, dateinamePur]
+        insertZa = "insert into za-dateien (content, dateiname) values (?, ?)"
+        self.runId = self.db.execSql(insertZa, values)
 
 
 

@@ -11,5 +11,10 @@
     "3": "ZzV",
     "4": "Rückwirkende Kostenerstattung",
     "5": "Anwendung Härtefallregelung"
+  },
+  "63 - einkommensanrechnungEKAH": {
+    "0": "Grundstellung",
+    "4": "volle Einkommensanrechnung",
+    "5": "Freibetrag nicht ueberschritten"
   }
 }

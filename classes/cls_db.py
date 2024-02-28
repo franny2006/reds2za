@@ -4,7 +4,7 @@ import traceback
 
 class cls_dbAktionen():
     def __init__(self):
-        self.dbPfad = "D:/Datenbanken/redsux_rzp_isr.db"
+        self.dbPfad = "D:/Datenbanken/redsux_rzp_isr_3.db"
         self.con = lite.connect(self.dbPfad, isolation_level='DEFERRED')
         cur = self.con.cursor()
         cur.execute('''PRAGMA synchronous = OFF''')

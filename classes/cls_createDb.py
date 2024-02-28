@@ -42,8 +42,24 @@ class cls_readXml():
         self.db.execSql(self.createFachlicheViews, '')
 
         # Steuerungstabelle aufbauen
-        createRuns = "CREATE TABLE IF NOT EXISTS runs (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, datei TEXT, ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL);"
+        createRuns = "CREATE TABLE IF NOT EXISTS runs (runId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, datei TEXT, ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL);"
         self.db.execSql(createRuns, '')
+
+        # Exporttabelle aufbauen
+        createRuns = "CREATE TABLE IF NOT EXISTS za-dateien (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, content TEXT, dateiname TEXT, ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL);"
+        self.db.execSql(createRuns, '')
+
+        # PRNR-Mappingtabelle aufbauen
+        createPrnrMapping = "CREATE TABLE IF NOT EXISTS prnrMapping (" \
+                            "id	INTEGER NOT NULL UNIQUE," \
+                            "datei TEXT," \
+                            "prnrOriginal TEXT, " \
+                            "prnrNeu TEXT, " \
+                            "panrOriginal TEXT, " \
+                            "panrNeu TEXT, " \
+                            "voat TEXT," \
+                            "PRIMARY KEY(id AUTOINCREMENT));"
+        self.db.execSql(createPrnrMapping, '')
 
         #self.db.execSql(self.createView, '')
         self.db.closeDB()
@@ -128,9 +144,10 @@ class cls_createViews():
         sql = "select * from fachlicheViews"
         cur = self.db.execSelect(sql, '')
         views = cur.fetchall()
+        print(views[0][5])
         column_names = [description[0] for description in cur.description]
    #     print(views.description)
-   #     print(views.description[1][0])
+        print("Cur", cur.description[5][0])
 
 #         listSaView = ['FT']
 #         for view in results:
@@ -164,7 +181,7 @@ class cls_createViews():
             i = 0
             for sa in view:
                 if sa == 'x':
-                    saToView = views.description[i][0]
+                    saToView = cur.description[i][0]
                     sqlGetColumns = "PRAGMA table_info('" + saToView + "')"
                     columns = self.db.execSelect(sqlGetColumns, '')
                     selectJoin = "(SELECT "
@@ -189,5 +206,8 @@ class cls_createViews():
 
 
 if __name__ == "__main__":
-    x = cls_readXml()
- #   y = cls_createViews()
+    # Anlegen der Tabellen (1. Schritt)
+    # x = cls_readXml()
+
+    # Anlegen der Views (erst muessen die Tabellen angelegt sein
+    y = cls_createViews()
