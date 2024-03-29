@@ -20,13 +20,19 @@ class cls_convertReds():
         self.aimo = '11.21'
         self.sendungsnummer =  "1"
         self.laufendeNummerLieferung = "1"
-        self.selectAusRedsDatenbank = "select * from V_VOAT_21 where voat = 21 and sa_71_id is NULL and sa_72_id is NULL and Sa_74_id is NULL"
+        self.selectAusRedsDatenbank = "select * from V_VOAT_21 where voat = 21 and sa_71_id is NULL and sa_72_id is NULL and Sa_74_id is NULL and runId in (3,4,5,6)"
+     #   self.selectAusRedsDatenbank = "select * from V_VOAT_21 where runId = 8 limit 100"
         self.zeigeAlleTestfaelle = False
+        self.PANRkorrigieren = True
+        self.PRNRkorrigieren = True
+        self.AdressenKorrigieren = True
+        self.adressService = False
 
 
 
         # Keywords
         sortierungSa = "FT, 11, 13, 14, 05, 12, 15, 16, 17, 19, 90, 95, B3, B4, B5, M1, M3, M4, PZ, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 91"
+        self.sortierungSa = ['FT', '11', '13', '14', '05', '12', '15', '16', '17', '19', '90', '95', 'B3', 'B4', 'B5', 'M1', 'M3', 'M4', 'PZ', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '91']
         self.dictKeywords = {
             "#laenge":          self.keyword_laengeSl,
             "#auftragsdatum":   self.keyword_auftragsdatum,
@@ -60,6 +66,7 @@ class cls_convertReds():
         # Einlesen der Mappingtabelle
         self.mappingDf = self.readMappingTabelle()
 
+
         # Initialisieren der Schluesselwerte
         convertKeys = cls_schluesseltabellen()
 
@@ -68,6 +75,7 @@ class cls_convertReds():
     #    print(self.redsDf.iloc[0].to_string())
 
         self.redsDf = self.clsRedsFromDb.readDb(self.selectAusRedsDatenbank)
+   #     print(self.redsDf)
    #     print(self.redsDf.iloc[0].to_string())
    #     sys.exit()
 
@@ -94,6 +102,9 @@ class cls_convertReds():
             anliegen = {}
 
             self.laengeGesamt = self.readSatzartlaenge(self.listeSatzarten)
+
+            # Reihenfolge anpassen
+            self.listeSatzarten = sorted(self.listeSatzarten, key=lambda x: self.sortSa.index(x))
 
             # Iterieren der im REDS gefundenen Satzarten
             for satzart in self.listeSatzarten:
@@ -130,26 +141,31 @@ class cls_convertReds():
 
                         else:
                             feldnameReds = str(dfSaFelder['REDS_Satzart_Schluessel'][saFeldIndex]) + ' - ' + str(dfSaFelder['REDS_Feld'][saFeldIndex])
-                            feldnameRedsAlternativ = str(dfSaFelder['REDS_Satzart_Schluessel_2'][saFeldIndex]) + ' - ' + str(dfSaFelder['REDS_Feld_2'][saFeldIndex])
-               #             print(self.redsDf.iloc[self.anliegenNr].to_string())
+                            feldnameRedsAlternativ2 = str(dfSaFelder['REDS_Satzart_Schluessel_2'][saFeldIndex]) + ' - ' + str(dfSaFelder['REDS_Feld_2'][saFeldIndex])
+                            feldnameRedsAlternativ3 = str(dfSaFelder['REDS_Satzart_Schluessel_3'][saFeldIndex]) + ' - ' + str(dfSaFelder['REDS_Feld_3'][saFeldIndex])
+
 
                             if not pd.isna(self.redsDf.iloc[self.anliegenNr][feldnameReds]):
                                 feldinhalt = self.redsDf.iloc[self.anliegenNr][feldnameReds]
-                               # print("Feldname eins", feldnameReds, feldinhalt)
                             else:
-                       #         print("Problemfeld", dfSaFelder['Satzart'][saFeldIndex], dfSaFelder['Feld'][saFeldIndex], dfSaFelder['REDS_Feld_2'][saFeldIndex])
+                                # Alternativbelegung 2 abfragen
                                 if dfSaFelder['REDS_Feld_2'][saFeldIndex][:1] == "#":
                                     keyword = self.dictKeywords.get(dfSaFelder['REDS_Feld_2'][saFeldIndex])
                                     if dfSaFelder['REDS_Feld_2'][saFeldIndex].lower() == "#reserve":
-                                  #      print("Daten:", dfSaFelder['Feldlnge'][saFeldIndex], dfSaFelder['art'][saFeldIndex])
                                         feldinhalt = keyword(dfSaFelder['Feldlnge'][saFeldIndex], dfSaFelder['art'][saFeldIndex])
-                                  #      print("Kein Feldinhalt gefunden / Reserve genommen: ", feldinhalt)
-                                elif not pd.isna(self.redsDf.iloc[self.anliegenNr][feldnameRedsAlternativ]):
-                                    feldinhalt = self.redsDf.iloc[self.anliegenNr][feldnameRedsAlternativ]
-                               #     print("Feldname Alternativ", feldnameRedsAlternativ, feldinhalt)
+                                elif not pd.isna(self.redsDf.iloc[self.anliegenNr][feldnameRedsAlternativ2]):
+                                    feldinhalt = self.redsDf.iloc[self.anliegenNr][feldnameRedsAlternativ2]
                                 else:
-                                #    print("Keine Ahnung mehr")
-                                    pass
+                                    # Alternativbelegung 3 abfragen
+                                    feldinhaltReds3 = dfSaFelder['REDS_Feld_3'][saFeldIndex]
+                                    if str(feldinhaltReds3)[:1] == "#":
+                                        keyword = self.dictKeywords.get(dfSaFelder['REDS_Feld_3'][saFeldIndex])
+                                        if dfSaFelder['REDS_Feld_3'][saFeldIndex].lower() == "#reserve":
+                                            feldinhalt = keyword(dfSaFelder['Feldlnge'][saFeldIndex], dfSaFelder['art'][saFeldIndex])
+                                    elif not pd.isna(self.redsDf.iloc[self.anliegenNr][feldnameRedsAlternativ3]):
+                                        feldinhalt = self.redsDf.iloc[self.anliegenNr][feldnameRedsAlternativ3]
+                                    else:
+                                        pass
 
 
 
@@ -180,21 +196,24 @@ class cls_convertReds():
                         anliegen['61 - zahlbeginnZLBE'] = zlbe
 
             # PANR überprüfen und ggf. ueberschreiben (falls nicht in PANR-Liste)
-            panrOriginal = anliegen['FT - panr']
-            panrNeu = anliegen['FT - panr']
-            dictLeistungstraeger = self.parseLtr.parsePanr(self.hauptPanr)
-            if anliegen['FT - panr'] not in dictLeistungstraeger['panrListe']:
-                anliegen['FT - panr'] = self.hauptPanr
-                panrNeu = self.hauptPanr
+            if self.PANRkorrigieren == True:
+                panrOriginal = anliegen['FT - panr']
+                panrNeu = anliegen['FT - panr']
+                dictLeistungstraeger = self.parseLtr.parsePanr(self.hauptPanr)
+                if anliegen['FT - panr'] not in dictLeistungstraeger['panrListe']:
+                    anliegen['FT - panr'] = self.hauptPanr
+                    panrNeu = self.hauptPanr
 
             # PRNR korrigieren und originale und neue PRNR in Liste speichern
-            prnrOriginal = anliegen['FT - prnr']
-            prnrNeu = self.korrekturPrnr(anliegen)
-            self.createPrnrMappingList(prnrOriginal, prnrNeu, panrOriginal, panrNeu, anliegen['FT - voat'])
-            anliegen['FT - prnr'] = prnrNeu
+            if self.PRNRkorrigieren == True:
+                prnrOriginal = anliegen['FT - prnr']
+                prnrNeu = self.korrekturPrnr(anliegen)
+                self.createPrnrMappingList(prnrOriginal, prnrNeu, panrOriginal, panrNeu, anliegen['FT - voat'])
+                anliegen['FT - prnr'] = prnrNeu
 
             # Adressen korrigieren
-            anliegen = self.korrekturAdresse(anliegen)
+            if self.AdressenKorrigieren == True:
+                anliegen = self.korrekturAdresse(anliegen)
 
             # Aufbausumme errechnen und ueberschreiben
             anliegen['FT - beitragssummeBTSU'] = self.beitragssummeBerechnen(anliegen)
@@ -226,7 +245,7 @@ class cls_convertReds():
 
 
     def readMappingTabelle(self):
-        mappingDf = pd.read_excel('../files/schluesseltabelle.xlsx')
+        mappingDf = pd.read_excel('../files/schluesseltabelle.xlsx', dtype=str)
         return mappingDf
 
 
@@ -244,16 +263,21 @@ class cls_convertReds():
                 # print(gefundene_zeilen.to_string())
                 if not gefundene_zeilen.empty:
                     saDs10 = gefundene_zeilen['Satzart'].iloc[0]
-                    print("REDS-DF:", anliegenNr, saReds, saDs10, feldnameReds, feldinhaltReds)
+                    print("REDS-DF Variante 1:", anliegenNr, saReds, saDs10, feldnameReds, feldinhaltReds)
                 else:
                     # Prüfen der Mappingvarianten (für Blockfelder)
                     gefundene_zeilen = self.mappingDf[(self.mappingDf['REDS_Feld_2'] == feldnameReds) & (self.mappingDf['REDS_Satzart_Schluessel_2'] == saReds)]
                     if not gefundene_zeilen.empty:
                         saDs10 = gefundene_zeilen['Satzart'].iloc[0]
-                    #    print("REDS-DF:", anliegenNr, saReds, saDs10, feldnameReds, feldinhaltReds)
+                        print("REDS-DF Variante 2:", anliegenNr, saReds, saDs10, feldnameReds, feldinhaltReds)
                     else:
-                        pass
-                    #    print("kein Mapping moeglich fuer ", anliegenNr, saReds, '--', feldnameReds, feldnameReds)
+                        gefundene_zeilen = self.mappingDf[(self.mappingDf['REDS_Feld_3'] == str(feldnameReds)) & (self.mappingDf['REDS_Satzart_Schluessel_3'] == str(saReds))]
+                        if not gefundene_zeilen.empty:
+                            saDs10 = gefundene_zeilen['Satzart'].iloc[0]
+                            print("REDS-DF Variante 3:", anliegenNr, saReds, saDs10, feldnameReds, feldinhaltReds)
+                        else:
+                            print("kein Mapping moeglich fuer ", anliegenNr, saReds, '--', feldnameReds, feldinhaltReds)
+                            pass
 
                 if not saDs10 in self.listeSatzarten and saDs10 != "":
                     self.listeSatzarten.append(saDs10)
@@ -272,8 +296,9 @@ class cls_convertReds():
         laengeGesamt = 1
         for satzart in listeSatzarten:
          #   saLaenge = self.mappingDf.groupby('Satzart')['Feldlnge'].sum()
-            saLaenge = self.mappingDf.loc[self.mappingDf['Satzart'] == satzart, 'Feldlnge'].sum()
-            laengeGesamt = laengeGesamt + saLaenge
+            temp = self.mappingDf.loc[self.mappingDf['Satzart'] == satzart, 'Feldlnge']
+            saLaenge = self.mappingDf.loc[self.mappingDf['Satzart'] == satzart, 'Feldlnge'].astype(int).sum()
+            laengeGesamt = laengeGesamt + int(saLaenge)
         return laengeGesamt
 
 
@@ -296,10 +321,10 @@ class cls_convertReds():
 
         if feldart == "zero":
             feldinhalt = str(feldinhalt).replace(" ", "0")
-            feldinhalt = str(feldinhalt).zfill(laenge)
-            feldinhalt = feldinhalt[-laenge:]
+            feldinhalt = str(feldinhalt).zfill(int(laenge))
+            feldinhalt = feldinhalt[-int(laenge):]
         else:
-            feldinhalt = str(feldinhalt[:laenge]).ljust(laenge)
+            feldinhalt = str(feldinhalt[:int(laenge)]).ljust(int(laenge))
 
         return feldinhalt
 
@@ -374,13 +399,50 @@ class cls_convertReds():
         print("PRNR: ", anliegen['FT - prnr'], prnrKorrigiert)
         return prnrKorrigiert
 
+    def adressenLokal(self):
+        print("#######################################################")
+        adressen_liste = "89349,Burtenbach,Hauptstrasse;" \
+                         "27367,Ahausen,Verdener Strasse;" \
+                         "93053,Regensburg,Hornstrasse;" \
+                         "55743,Idar-Oberstein,Auf der Acht;" \
+                         "77749,Hohberg,Freiburger Strasse;" \
+                         "53879,Euskirchen,Berliner Strasse;" \
+                         "78315,Radolfzell am Bodensee,Haselbrunnstrasse"
+
+        # Aufteilen der kommaseparierten Liste in einzelne Adressen
+        adressen = [adresse.split(",") for adresse in adressen_liste.split(";")]
+
+        # Zufällige Auswahl von 3 Adressen
+        random_adressen = random.sample(adressen, 3)
+        print(random_adressen)
+
+        # Erstellung der verschachtelten Liste
+        adresseData = {
+            'Adresse': []}
+        for index, adresse in enumerate(random_adressen):
+            adresseData['Adresse'].append({
+                'postleitzahl': adresse[0],
+                'ort_name': adresse[1],
+                'strasse_name': adresse[2]
+            })
+
+        # Ausgabe der verschachtelten Liste
+        print(adresseData)
+        return adresseData
+
+
     def korrekturAdresse(self, anliegen):
+        print("**********************************************************************************************************adrkorr******************")
         if '13 - zahlungsempfaengerPlzPLZ' in anliegen:
-            headers = {
-                'Content-type': 'application/json'}
-            adresseValide = requests.post('http://127.0.0.1:5005/api/v1.0/getAdresse/3', headers=headers)
-            adresseData = adresseValide.json()
-            print(adresseData)
+            if self.adressService == True:
+                headers = {
+                    'Content-type': 'application/json'}
+                adresseValide = requests.post('http://127.0.0.1:5005/api/v1.0/getAdresse/3', headers=headers)
+                adresseData = adresseValide.json()
+                print(adresseData)
+            else:
+                adresseData = self.adressenLokal()
+                print(adresseData)
 
             if '13 - zahlungsempfaengerPlzPLZ' in anliegen:
                 anliegen['13 - zahlungsempfaengerPlzPLZ'] = str(adresseData['Adresse'][0]['postleitzahl'][:10]).ljust(10)
@@ -389,7 +451,7 @@ class cls_convertReds():
             if '14 - strasseZahlungsempfaengerSE' in anliegen:
                 anliegen['14 - strasseZahlungsempfaengerSE'] = str(adresseData['Adresse'][0]['strasse_name'][:33]).ljust(33)
             if '14 - hausnummerZahlumgsempfaengerHAUSNR' in anliegen:
-                anliegen['14 - hausnummerZahlumgsempfaengerHAUSNR'] = str(random.randrange(1, 120)).ljust(9)
+                anliegen['14 - hausnummerZahlumgsempfaengerHAUSNR'] = str(random.randrange(1, 5)).ljust(9)
 
             # Berechtigter
             if 'B3 - postleitzahlBerechtigterPLZBC' in anliegen:
@@ -399,7 +461,7 @@ class cls_convertReds():
             if 'B4 - strasseBerechtigterSEBC' in anliegen:
                 anliegen['B4 - strasseBerechtigterSEBC'] = str(adresseData['Adresse'][1]['strasse_name'][:33]).ljust(33)
             if 'B4 - hausnummerBerechtigterHAUSNRBC' in anliegen:
-                anliegen['B4 - hausnummerBerechtigterHAUSNRBC'] = str(random.randrange(1, 120)).ljust(9)
+                anliegen['B4 - hausnummerBerechtigterHAUSNRBC'] = str(random.randrange(1, 5)).ljust(9)
 
             # Mitteilungsempfänger
             if 'M3 - plzMitteilungsempfaengerMT' in anliegen:
@@ -409,7 +471,7 @@ class cls_convertReds():
             if 'M4 - strasseZahlungsempfaengerSEMT' in anliegen:
                 anliegen['M4 - strasseZahlungsempfaengerSEMT'] = str(adresseData['Adresse'][2]['strasse_name'][:33]).ljust(33)
             if 'M4 - hausnummerZahlumgsempfaengerHAUSNRMT' in anliegen:
-                anliegen['M4 - hausnummerZahlumgsempfaengerHAUSNRMT'] = str(random.randrange(1, 120)).ljust(9)
+                anliegen['M4 - hausnummerZahlumgsempfaengerHAUSNRMT'] = str(random.randrange(1, 5)).ljust(9)
 
             print("Nachher:")
             try:
@@ -480,8 +542,18 @@ class cls_convertReds():
         dateinamePur = os.path.splitext(os.path.basename(filenameZa))[0]
         dateinameXls = verzeichnis + '/' + dateinamePur + "_testdaten.xlsx"
 
-        # Konvertieren der Liste von Dictionaries in einen DataFrame
+        # Konvertieren der Liste von Dictionaries in einen DataFrame und Änderung der Sortierreihenfolge
         df_anliegen = pd.DataFrame(anliegenGesamt)
+        # Die Spalten des DataFrame neu anordnen
+        neue_spaltenreihenfolge = []
+   #     for prefix in self.sortierungSa:
+   #         neue_spaltenreihenfolge.extend(sorted([col for col in df_anliegen.columns if col.startswith(prefix)]))
+
+        for prefix in self.sortierungSa:
+            spalten_mit_präfix = [col for col in df_anliegen.columns if col.startswith(prefix)]
+            neue_spaltenreihenfolge.extend(sorted(spalten_mit_präfix, key=lambda x: df_anliegen.columns.get_loc(x)))
+        df_anliegen = df_anliegen[neue_spaltenreihenfolge]
+
 
         # DataFrame aller Anliegen als Excel-Datei speichern
         df_anliegen.to_excel(dateinameXls, index=False)

@@ -1,4 +1,5 @@
 import json
+import random
 
 class cls_schluesseltabellen():
     def __init__(self):
@@ -9,22 +10,28 @@ class cls_schluesseltabellen():
 
     def checkKey(self, feldname, feldinhalt):
         if feldname in self.data:
-            print("Feldname gefunden")
-            if feldinhalt in self.data[feldname]:
-                print("Feldinhalt gefunden", self.data[feldname][feldinhalt])
-                ersetzt = False
+            print("Feldname gefunden:", feldname)
+            if feldname == "15 - iban":
+                if not feldinhalt.isspace():
+                    ersetzt = random.choice(self.data["15 - iban"])
+                else:
+                    ersetzt = False
             else:
-                # Den ersten Schluessel abrufen
-                first_key = next(iter(self.data[feldname]))
+                if feldinhalt in self.data[feldname]:
+                    print("Feldinhalt gefunden", self.data[feldname][feldinhalt])
+                    ersetzt = False
+                else:
+                    # Den ersten Schluessel abrufen
+                    first_key = next(iter(self.data[feldname]))
 
-                # Den ersten Wert anzeigen
-                first_value = self.data[feldname][first_key]
+                    # Den ersten Wert anzeigen
+                    first_value = self.data[feldname][first_key]
 
-                print("Feldinhalt nicht gefunden, Grundstellung ausgewaehlt", first_value)
-                ersetzt = first_key
+                    print("Feldinhalt nicht gefunden, Grundstellung ausgewaehlt", first_value)
+                    ersetzt = first_key
         else:
             ersetzt = False
-            print("Feldname nicht gefunden")
+          #  print("Feldname nicht gefunden")
 
         return ersetzt
 

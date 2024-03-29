@@ -4,7 +4,7 @@ import sqlite3 as lite
 
 class cls_readRedsFromDb():
     def __init__(self):
-        self.dbPfad = "D:/Datenbanken/redsux_rzp_isr.db"
+        self.dbPfad = "D:/Datenbanken/redsux_rzp_isr_3.db"
  #       self.readDb(sql)
 
     def readDb(self, sql):
